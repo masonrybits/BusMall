@@ -1,0 +1,13 @@
+img {
+  max-width: 300px;
+  max-height: 300px;
+  display: inline-block;
+  margin-left: 60px;
+  margin-top: 50px;
+}
+
+body {
+  font-size: 18px;
+  background-color: pink;
+
+}
