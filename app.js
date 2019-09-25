@@ -96,30 +96,13 @@ function handleClick(event) {
   }
 }
 
-//Make new Products instantiation
-new Product('Bag', 'img/bag.jpg');
-new Product('Banana Slicer', 'img/banana.jpg');
-new Product('Bathroom Stand', 'img/bathroom.jpg');
-new Product('Boots', 'img/boots.jpg');
-new Product('Breakfast Oven', 'img/breakfast.jpg');
-new Product('Meatball Bubblegum', 'img/bubblegum.jpg');
-new Product('Chair', 'img/chair.jpg');
-new Product('Cthulhu', 'img/cthulhu.jpg');
-new Product('Dog Duck', 'img/dog-duck.jpg');
-new Product('Dragon Meat', 'img/dragon.jpg');
-new Product('Pen', 'img/pen.jpg');
-new Product('Pet Sweep', 'img/pet-sweep.jpg');
-new Product('Scissors', 'img/scissors.jpg');
-new Product('Shark', 'img/shark.jpg');
-new Product('Sweep', 'img/sweep.png');
-new Product('Tauntaun', 'img/tauntaun.jpg');
-new Product('Unicorn Meat', 'img/unicorn.jpg');
-new Product('USB', 'img/usb.gif');
-new Product('Watering Can', 'img/water-can.jpg');
-new Product('Wine Glass', 'img/wine-glass.jpg');
+function updateStorage(){
+  // to save the coffee orders into local storage
 
-// add event listener
-productImagesTag.addEventListener('click', handleClick);
+  // convert our array of objects into a JSON string. 
+  var jsonString = JSON.stringify(Coffee.allCoffee);
+  localStorage.setItem('coffee', jsonString);
+}
 
 // chart
 // function to update name & clicked in 2 seperate arrays
@@ -174,5 +157,30 @@ var myChart = new Chart(ctx, {
     }
   }
 });
+
+//Make new Products instantiation
+new Product('Bag', 'img/bag.jpg');
+new Product('Banana Slicer', 'img/banana.jpg');
+new Product('Bathroom Stand', 'img/bathroom.jpg');
+new Product('Boots', 'img/boots.jpg');
+new Product('Breakfast Oven', 'img/breakfast.jpg');
+new Product('Meatball Bubblegum', 'img/bubblegum.jpg');
+new Product('Chair', 'img/chair.jpg');
+new Product('Cthulhu', 'img/cthulhu.jpg');
+new Product('Dog Duck', 'img/dog-duck.jpg');
+new Product('Dragon Meat', 'img/dragon.jpg');
+new Product('Pen', 'img/pen.jpg');
+new Product('Pet Sweep', 'img/pet-sweep.jpg');
+new Product('Scissors', 'img/scissors.jpg');
+new Product('Shark', 'img/shark.jpg');
+new Product('Sweep', 'img/sweep.png');
+new Product('Tauntaun', 'img/tauntaun.jpg');
+new Product('Unicorn Meat', 'img/unicorn.jpg');
+new Product('USB', 'img/usb.gif');
+new Product('Watering Can', 'img/water-can.jpg');
+new Product('Wine Glass', 'img/wine-glass.jpg');
+
+// add event listener
+productImagesTag.addEventListener('click', handleClick);
 
 renderProduct();
