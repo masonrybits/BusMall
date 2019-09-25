@@ -8,7 +8,7 @@ var productMiddle = document.getElementById('productMiddle');
 var productRight = document.getElementById('productRight');
 var message = document.getElementById('message');
 var productVote = 0;
-var rounds = 25;
+var rounds = 5;
 var lastViewed = [];
 
 
@@ -29,6 +29,8 @@ function Product(name, image) {
   this.clicked = 0;
   this.views = 0;
   Product.allProducts.push(this);
+  // update the array of objects onto local storage
+  updateStorage();
 }
 
 // random function
@@ -82,7 +84,8 @@ function handleClick(event) {
   if (productVote === rounds) {
     // remove eventlistener
     productImagesTag.removeEventListener('click', handleClick);
-    // alert('You completed the voting.');
+    // clear the message
+    message.textContent= '';
     // add new li elements to populate messages
     for (var i = 0; i < Product.allProducts.length; i++) {
       var product = Product.allProducts[i];
@@ -97,12 +100,37 @@ function handleClick(event) {
   }
 }
 
-function updateStorage(){
-  // to save the coffee orders into local storage
-
+function updateStorage() {
+  // to save the products into local storage
   // convert our array of objects into a JSON string. 
-  var jsonString = JSON.stringify(Coffee.allCoffee);
-  localStorage.setItem('coffee', jsonString);
+  var jsonString = JSON.stringify(Product.allProducts);
+  localStorage.setItem('product', jsonString);
+}
+
+// create a function that GETS the data from local storage
+// sets our global array to the data from local storage. 
+function getProducts() {
+  // retrieve the data from local storage
+  var data = localStorage.getItem('product');
+  var parsedData = JSON.parse(data);
+  console.log("parseddata", parsedData);
+  // set the global Coffee.allcoffee array to the data we retrieved from local storage
+  Product.allProducts = parsedData;
+  // convert the data to usable javaScript
+  console.log(Product.allProducts);
+}
+
+function getProductsAlternative(){
+  var data = localStorage.getItem('product');
+  var parsedData = JSON.parse(data);
+
+  // parsed data is our JS object array
+  for(var i=0; i < parsedData.length; i++){
+    new Product(parsedData[i].name, parsedData[i].image, parsedData[i].cliked, parsedData[i].views);
+  }
+  console.log(Product.allCoffee);
+  Product.allProducts = parsedData;
+
 }
 
 // chart
@@ -186,4 +214,6 @@ new Product('Wine Glass', 'img/wine-glass.jpg');
 // add event listener
 productImagesTag.addEventListener('click', handleClick);
 
+// getProductsAlternative();
+getProducts();
 renderProduct();
