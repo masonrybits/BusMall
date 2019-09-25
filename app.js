@@ -11,7 +11,6 @@ var productVote = 0;
 var rounds = 5;
 var lastViewed = [];
 
-
 // null is nothing
 var leftProductIndex = null;
 var middleProductIndex = null;
@@ -21,7 +20,6 @@ var rightProductIndex = null;
 var names = [];
 var votes = [];
 
-
 // constructor function of product
 function Product(name, image) {
   this.name = name;
@@ -29,8 +27,6 @@ function Product(name, image) {
   this.clicked = 0;
   this.views = 0;
   Product.allProducts.push(this);
-  // update the array of objects onto local storage
-  updateStorage();
 }
 
 // random function
@@ -67,7 +63,7 @@ function renderProduct() {
 }
 
 function handleClick(event) {
-  // event.preventDefault();
+  event.preventDefault();
   var productClicked = event.target.id;
   if (productClicked === 'productLeft' || productClicked === 'productMiddle' || productClicked === 'productRight') {
     productVote++;
@@ -85,7 +81,7 @@ function handleClick(event) {
     // remove eventlistener
     productImagesTag.removeEventListener('click', handleClick);
     // clear the message
-    message.textContent= '';
+    // message.textContent = '';
     // add new li elements to populate messages
     for (var i = 0; i < Product.allProducts.length; i++) {
       var product = Product.allProducts[i];
@@ -93,45 +89,48 @@ function handleClick(event) {
       newLi.textContent = `${product.name} had ${product.clicked} votes and was seen ${product.views} times`;
       message.appendChild(newLi);
     }
-    getChartArrays();
+    updateStorage();
     chart();
   } else {
     renderProduct();
   }
 }
 
+// to save the products into local storage
 function updateStorage() {
-  // to save the products into local storage
-  // convert our array of objects into a JSON string. 
+  // convert our array of objects into a JSON string
+  if (localStorage.getItem('product') !== null) {
+    localStorage.clear;
+  }
   var jsonString = JSON.stringify(Product.allProducts);
   localStorage.setItem('product', jsonString);
 }
 
 // create a function that GETS the data from local storage
-// sets our global array to the data from local storage. 
+// sets our global array to the data from local storage
 function getProducts() {
   // retrieve the data from local storage
   var data = localStorage.getItem('product');
-  var parsedData = JSON.parse(data);
-  console.log("parseddata", parsedData);
-  // set the global Coffee.allcoffee array to the data we retrieved from local storage
-  Product.allProducts = parsedData;
-  // convert the data to usable javaScript
-  console.log(Product.allProducts);
-}
-
-function getProductsAlternative(){
-  var data = localStorage.getItem('product');
-  var parsedData = JSON.parse(data);
-
-  // parsed data is our JS object array
-  for(var i=0; i < parsedData.length; i++){
-    new Product(parsedData[i].name, parsedData[i].image, parsedData[i].cliked, parsedData[i].views);
+  if (localStorage.getItem('product') === null) {
+    console.log('Not found');
+  } else {
+    // to save the products into local storage
+    var parsedData = JSON.parse(data);
+    // set the global Product.allproducts array to the data we retrieved from local storage
+    Product.allProducts = parsedData;
   }
-  console.log(Product.allCoffee);
-  Product.allProducts = parsedData;
-
 }
+
+// function getProductsAlternative() {
+//   var data = localStorage.getItem('product');
+//   var parsedData = JSON.parse(data);
+
+//   // parsed data is our JS object array
+//   for (var i = 0; i < parsedData.length; i++) {
+//     new Product(parsedData[i].name, parsedData[i].image);
+//   }
+//   console.log(Product.allCoffee);
+// }
 
 // chart
 // function to update name & clicked in 2 seperate arrays
@@ -144,6 +143,7 @@ function getChartArrays() {
 
 // bar chart with given variables names(x-axis) and votes(y-axi)
 function chart() {
+  getChartArrays();
   var ctx = document.getElementById('chart');
   var myChart = new Chart(ctx, {
     type: 'bar',
@@ -214,6 +214,5 @@ new Product('Wine Glass', 'img/wine-glass.jpg');
 // add event listener
 productImagesTag.addEventListener('click', handleClick);
 
-// getProductsAlternative();
 getProducts();
 renderProduct();
