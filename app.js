@@ -8,9 +8,8 @@ var productMiddle = document.getElementById('productMiddle');
 var productRight = document.getElementById('productRight');
 var message = document.getElementById('message');
 var productVote = 0;
-var rounds = 25;
+var rounds = 5;
 var lastViewed = [];
-
 
 // null is nothing
 var leftProductIndex = null;
@@ -20,7 +19,6 @@ var rightProductIndex = null;
 // chart variables
 var names = [];
 var votes = [];
-
 
 // constructor function of product
 function Product(name, image) {
@@ -65,7 +63,7 @@ function renderProduct() {
 }
 
 function handleClick(event) {
-  // event.preventDefault();
+  event.preventDefault();
   var productClicked = event.target.id;
   if (productClicked === 'productLeft' || productClicked === 'productMiddle' || productClicked === 'productRight') {
     productVote++;
@@ -82,7 +80,8 @@ function handleClick(event) {
   if (productVote === rounds) {
     // remove eventlistener
     productImagesTag.removeEventListener('click', handleClick);
-    // alert('You completed the voting.');
+    // clear the message
+    // message.textContent = '';
     // add new li elements to populate messages
     for (var i = 0; i < Product.allProducts.length; i++) {
       var product = Product.allProducts[i];
@@ -90,37 +89,50 @@ function handleClick(event) {
       newLi.textContent = `${product.name} had ${product.clicked} votes and was seen ${product.views} times`;
       message.appendChild(newLi);
     }
-    getChartArrays();
+    updateStorage();
     chart();
   } else {
     renderProduct();
   }
 }
 
-//Make new Products instantiation
-new Product('Bag', 'img/bag.jpg');
-new Product('Banana Slicer', 'img/banana.jpg');
-new Product('Bathroom Stand', 'img/bathroom.jpg');
-new Product('Boots', 'img/boots.jpg');
-new Product('Breakfast Oven', 'img/breakfast.jpg');
-new Product('Meatball Bubblegum', 'img/bubblegum.jpg');
-new Product('Chair', 'img/chair.jpg');
-new Product('Cthulhu', 'img/cthulhu.jpg');
-new Product('Dog Duck', 'img/dog-duck.jpg');
-new Product('Dragon Meat', 'img/dragon.jpg');
-new Product('Pen', 'img/pen.jpg');
-new Product('Pet Sweep', 'img/pet-sweep.jpg');
-new Product('Scissors', 'img/scissors.jpg');
-new Product('Shark', 'img/shark.jpg');
-new Product('Sweep', 'img/sweep.png');
-new Product('Tauntaun', 'img/tauntaun.jpg');
-new Product('Unicorn Meat', 'img/unicorn.jpg');
-new Product('USB', 'img/usb.gif');
-new Product('Watering Can', 'img/water-can.jpg');
-new Product('Wine Glass', 'img/wine-glass.jpg');
+// to save the products into local storage
+function updateStorage() {
+  if (localStorage.getItem('product') !== null) {
+    localStorage.clear;
+  }
+  // convert our array of objects into a JSON string
+  var jsonString = JSON.stringify(Product.allProducts);
+  // add our converted array onto local storage
+  localStorage.setItem('product', jsonString);
+}
 
-// add event listener
-productImagesTag.addEventListener('click', handleClick);
+// create a function that GETS the data from local storage
+// sets our global array to the data from local storage
+function getProducts() {
+  // retrieve the data from local storage
+  var data = localStorage.getItem('product');
+  if (localStorage.getItem('product') === null) {
+    console.log('Not found');
+  } else {
+    // to save the products into local storage
+    var parsedData = JSON.parse(data);
+    // set the global Product.allProducts array to the data we retrieved from local storage
+    Product.allProducts = parsedData;
+  }
+}
+
+// function getProductsAlternative() {
+//   var data = localStorage.getItem('product');
+//   var parsedData = JSON.parse(data);
+//   if (localStorage.getItem('product') === null) {
+//     console.log('Not found');
+//   } else {
+//     // parsed data is our JS object array
+//     for (var i = 0; i < parsedData.length; i++) {
+//       new Product(parsedData[i].name, parsedData[i].image);
+//     }
+//   }
 
 // chart
 // function to update name & clicked in 2 seperate arrays
@@ -133,6 +145,7 @@ function getChartArrays() {
 
 // bar chart with given variables names(x-axis) and votes(y-axi)
 function chart() {
+  getChartArrays();
   var ctx = document.getElementById('chart');
   var myChart = new Chart(ctx, {
     type: 'bar',
@@ -178,4 +191,30 @@ function chart() {
   });
 }
 
+//Make new Products instantiation
+new Product('Bag', 'img/bag.jpg');
+new Product('Banana Slicer', 'img/banana.jpg');
+new Product('Bathroom Stand', 'img/bathroom.jpg');
+new Product('Boots', 'img/boots.jpg');
+new Product('Breakfast Oven', 'img/breakfast.jpg');
+new Product('Meatball Bubblegum', 'img/bubblegum.jpg');
+new Product('Chair', 'img/chair.jpg');
+new Product('Cthulhu', 'img/cthulhu.jpg');
+new Product('Dog Duck', 'img/dog-duck.jpg');
+new Product('Dragon Meat', 'img/dragon.jpg');
+new Product('Pen', 'img/pen.jpg');
+new Product('Pet Sweep', 'img/pet-sweep.jpg');
+new Product('Scissors', 'img/scissors.jpg');
+new Product('Shark', 'img/shark.jpg');
+new Product('Sweep', 'img/sweep.png');
+new Product('Tauntaun', 'img/tauntaun.jpg');
+new Product('Unicorn Meat', 'img/unicorn.jpg');
+new Product('USB', 'img/usb.gif');
+new Product('Watering Can', 'img/water-can.jpg');
+new Product('Wine Glass', 'img/wine-glass.jpg');
+
+// add event listener
+productImagesTag.addEventListener('click', handleClick);
+
+getProducts();
 renderProduct();
