@@ -98,11 +98,12 @@ function handleClick(event) {
 
 // to save the products into local storage
 function updateStorage() {
-  // convert our array of objects into a JSON string
   if (localStorage.getItem('product') !== null) {
     localStorage.clear;
   }
+  // convert our array of objects into a JSON string
   var jsonString = JSON.stringify(Product.allProducts);
+  // add our converted array onto local storage
   localStorage.setItem('product', jsonString);
 }
 
@@ -116,7 +117,7 @@ function getProducts() {
   } else {
     // to save the products into local storage
     var parsedData = JSON.parse(data);
-    // set the global Product.allproducts array to the data we retrieved from local storage
+    // set the global Product.allProducts array to the data we retrieved from local storage
     Product.allProducts = parsedData;
   }
 }
@@ -124,13 +125,14 @@ function getProducts() {
 // function getProductsAlternative() {
 //   var data = localStorage.getItem('product');
 //   var parsedData = JSON.parse(data);
-
-//   // parsed data is our JS object array
-//   for (var i = 0; i < parsedData.length; i++) {
-//     new Product(parsedData[i].name, parsedData[i].image);
+//   if (localStorage.getItem('product') === null) {
+//     console.log('Not found');
+//   } else {
+//     // parsed data is our JS object array
+//     for (var i = 0; i < parsedData.length; i++) {
+//       new Product(parsedData[i].name, parsedData[i].image);
+//     }
 //   }
-//   console.log(Product.allCoffee);
-// }
 
 // chart
 // function to update name & clicked in 2 seperate arrays
