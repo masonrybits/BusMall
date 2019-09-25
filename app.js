@@ -91,6 +91,7 @@ function handleClick(event) {
       message.appendChild(newLi);
     }
     getChartArrays();
+    chart();
   } else {
     renderProduct();
   }
@@ -131,48 +132,50 @@ function getChartArrays() {
 }
 
 // bar chart with given variables names(x-axis) and votes(y-axi)
-var ctx = document.getElementById('chart');
-var myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: names,
-    datasets: [{
-      label: '# of Votes',
-      data: votes,
-      backgroundColor: [
-        'rgba(210, 99, 132, 1)',
-        'rgba(215, 99, 132, 1)',
-        'rgba(220, 99, 132, 1)',
-        'rgba(225, 99, 132, 1)',
-        'rgba(235, 99, 132, 1)',
-        'rgba(245, 99, 132, 1)',
-        'rgba(250, 99, 132, 1)',
-        'rgba(255, 99, 132, 1)',
-        'rgba(260, 99, 132, 1)',
-        'rgba(265, 99, 132, 1)',
-        'rgba(270, 99, 132, 1)',
-        'rgba(275, 99, 132, 1)',
-        'rgba(280, 99, 132, 1)',
-        'rgba(285, 99, 132, 1)',
-        'rgba(290, 99, 132, 1)',
-        'rgba(295, 99, 132, 1)',
-        'rgba(300, 99, 132, 1)',
-        'rgba(305, 99, 132, 1)',
-        'rgba(310, 99, 132, 1)',
-        'rgba(315, 99, 132, 1)',
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
+function chart() {
+  var ctx = document.getElementById('chart');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: '# of Votes',
+        data: votes,
+        backgroundColor: [
+          'rgba(210, 99, 132, 1)',
+          'rgba(215, 99, 132, 1)',
+          'rgba(220, 99, 132, 1)',
+          'rgba(225, 99, 132, 1)',
+          'rgba(235, 99, 132, 1)',
+          'rgba(245, 99, 132, 1)',
+          'rgba(250, 99, 132, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(260, 99, 132, 1)',
+          'rgba(265, 99, 132, 1)',
+          'rgba(270, 99, 132, 1)',
+          'rgba(275, 99, 132, 1)',
+          'rgba(280, 99, 132, 1)',
+          'rgba(285, 99, 132, 1)',
+          'rgba(290, 99, 132, 1)',
+          'rgba(295, 99, 132, 1)',
+          'rgba(300, 99, 132, 1)',
+          'rgba(305, 99, 132, 1)',
+          'rgba(310, 99, 132, 1)',
+          'rgba(315, 99, 132, 1)',
+        ],
+        borderWidth: 1
       }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
     }
-  }
-});
+  });
+}
 
 renderProduct();
