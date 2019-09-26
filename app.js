@@ -8,7 +8,7 @@ var productMiddle = document.getElementById('productMiddle');
 var productRight = document.getElementById('productRight');
 var message = document.getElementById('message');
 var productVote = 0;
-var rounds = 5;
+var rounds = 25;
 var lastViewed = [];
 
 // null is nothing
@@ -99,6 +99,7 @@ function handleClick(event) {
 // to save the products into local storage
 function updateStorage() {
   if (localStorage.getItem('product') !== null) {
+    //clear local storage (if storage can be found)
     localStorage.clear;
   }
   // convert our array of objects into a JSON string
@@ -112,10 +113,11 @@ function updateStorage() {
 function getProducts() {
   // retrieve the data from local storage
   var data = localStorage.getItem('product');
+  // if nothing in storage
   if (localStorage.getItem('product') === null) {
     console.log('Not found');
   } else {
-    // to save the products into local storage
+    //if storage, convert stored data back to Objects
     var parsedData = JSON.parse(data);
     // set the global Product.allProducts array to the data we retrieved from local storage
     Product.allProducts = parsedData;
@@ -124,13 +126,15 @@ function getProducts() {
 
 // function getProductsAlternative() {
 //   var data = localStorage.getItem('product');
-//   var parsedData = JSON.parse(data);
 //   if (localStorage.getItem('product') === null) {
 //     console.log('Not found');
 //   } else {
+//     var parsedData = JSON.parse(data);
 //     // parsed data is our JS object array
 //     for (var i = 0; i < parsedData.length; i++) {
-//       new Product(parsedData[i].name, parsedData[i].image);
+//       new Product(parsedData[i].name, parsedData[i].image,parsedData[i].clicked,parsedData[i].views);
+//     Product.allProducts = parsedData;
+
 //     }
 //   }
 
