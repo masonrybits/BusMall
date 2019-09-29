@@ -21,11 +21,11 @@ var names = [];
 var votes = [];
 
 // constructor function of product
-function Product(name, image) {
+function Product(name, image, clicked = 0, views = 0) {
   this.name = name;
   this.image = image;
-  this.clicked = 0;
-  this.views = 0;
+  this.clicked = clicked;
+  this.views = views;
   Product.allProducts.push(this);
 }
 
@@ -98,10 +98,6 @@ function handleClick(event) {
 
 // to save the products into local storage
 function updateStorage() {
-  if (localStorage.getItem('product') !== null) {
-    //clear local storage (if storage can be found)
-    localStorage.clear;
-  }
   // convert our array of objects into a JSON string
   var jsonString = JSON.stringify(Product.allProducts);
   // add our converted array onto local storage
@@ -128,12 +124,32 @@ function getProducts() {
 //   var data = localStorage.getItem('product');
 //   if (localStorage.getItem('product') === null) {
 //     console.log('Not found');
+//     new Product('Bag', 'img/bag.jpg');
+//     new Product('Banana Slicer', 'img/banana.jpg');
+//     new Product('Bathroom Stand', 'img/bathroom.jpg');
+//     new Product('Boots', 'img/boots.jpg');
+//     new Product('Breakfast Oven', 'img/breakfast.jpg');
+//     new Product('Meatball Bubblegum', 'img/bubblegum.jpg');
+//     new Product('Chair', 'img/chair.jpg');
+//     new Product('Cthulhu', 'img/cthulhu.jpg');
+//     new Product('Dog Duck', 'img/dog-duck.jpg');
+//     new Product('Dragon Meat', 'img/dragon.jpg');
+//     new Product('Pen', 'img/pen.jpg');
+//     new Product('Pet Sweep', 'img/pet-sweep.jpg');
+//     new Product('Scissors', 'img/scissors.jpg');
+//     new Product('Shark', 'img/shark.jpg');
+//     new Product('Sweep', 'img/sweep.png');
+//     new Product('Tauntaun', 'img/tauntaun.jpg');
+//     new Product('Unicorn Meat', 'img/unicorn.jpg');
+//     new Product('USB', 'img/usb.gif');
+//     new Product('Watering Can', 'img/water-can.jpg');
+//     new Product('Wine Glass', 'img/wine-glass.jpg');
 //   } else {
 //     var parsedData = JSON.parse(data);
 //     // parsed data is our JS object array
 //     for (var i = 0; i < parsedData.length; i++) {
-//       new Product(parsedData[i].name, parsedData[i].image,parsedData[i].clicked,parsedData[i].views);
-//     Product.allProducts = parsedData;
+//       new Product(parsedData[i].name, parsedData[i].image, parsedData[i].clicked, parsedData[i].views);
+//       Product.allProducts = parsedData;
 
 //     }
 //   }
@@ -220,5 +236,5 @@ new Product('Wine Glass', 'img/wine-glass.jpg');
 // add event listener
 productImagesTag.addEventListener('click', handleClick);
 
-getProducts();
 renderProduct();
+getProducts();

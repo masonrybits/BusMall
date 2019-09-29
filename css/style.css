@@ -11,3 +11,12 @@ body {
   background-color: pink;
 
 }
+
+h1 {
+  font-size: 40px;
+  text-align: center;
+}
+
+section {
+  margin-top: 50px;
+}
